@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments</title>
+    <link rel="stylesheet" href="appointments.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <header>
+        <div id="header">
+            <nav>
+                <button id="sidebar-toggle">☰</button>
+                <h1 id="welcome">Vaidya</h1>
+            </nav>   
+        </div>
+    </header>
+
+    <div id="sidebar" class="sidebar">
+        <a class="closebtn" onclick="closeSidebar()">&times;</a>
+        <a href="index.html">Home</a>
+        <a href="ums.html">UMS</a>
+        <a href="appointments.html" id="appointments-link">Appointments</a>
+        <a href="prescription.html">Prescription</a>
+        <a href="#">Doctors</a>
+        <a href="#">Contact Us</a>
+        <a href="accounts.html">Login/Signup</a>
+    </div>
+
+    <div id="main-container">
+        <div id="appointment-box">
+            <div id="content">
+                <div id="header">
+                    <h2 id="appointments-header">Appointments</h2>
+                    <div class="status-indicators">
+                        <div class="status-box green">Available</div>
+                        <div class="status-box blue">Booked</div>
+                    </div>
+                </div>
+                <div id="slots-container"></div>
+            </div>
+            <div id="calendar-container">
+                <div id="calendar"></div>
+                <button id="create-slots-button">Create Slots</button>
+            </div>
+        </div>
+    </div>
+
+
+    
+ <!-- Modal for form -->
+<div id="patient-search-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="patient-search">
+            <label for="">Mobile Number </label>
+            <input id="mobile-input" type="text" placeholder="Enter mobile number to search" />
+            <button id="search-button">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEDklEQVR4nO1YW0gUYRSet4oub0G9BvUY9FSvhXYD2bJGDdM5Z2bSUCzsQlZ0gyiJqOx+UysqDXooclej+1NlpVJC0UUjH6KifKjdbVfhxBnX2X9mN/Pyz6awBw7M/jvMfN+c75zzn19R0pa2tA3L8vPzpyDiKkQ8h4jNAPAVAKIx/8priHhW07Q8XdcnK6PFCgoKZiFiNQAEEZEG43wvAJwHgJn/DbiqqhMA4CAA9AwWeBIiHJ0DmqaNTyl4AJgJAK8SQK2rIKOyjoyaFjLqO8i82W05X1trlXXWPUnIPC4qKpqeEvC6rs+JaToOYMMuMmpbyfSHBuXGpXbSN+91R6OrsLBwdiq+fBy8YZJx9DaZDcFBg7e9IUjG0SbrGSIJTdOmeQKedQoAbTb44lIyLrQNHbjbL7SRXlwqRuM555d0Apyw4pfnFycDtO1BmM60ROj66x4KvO9zvua17Q/DySV18SWhsUaMxB7ppVKsNpZsXCDK74bo8qso3enoGdCvtEep/E4SElWNIoGfUqXEdb7/4frG3Qmar7gfpsD7PvC33kbp8NPftOlemNYGQpbzNa/xf3yP/12UKh64otEQJH3DLpHESWkdVmxSbumUNIWp8UPf161ujVi//6Z3/q+6LWLdy4SLAq4o1LaIufBLSseObQ9idX5rAigGcellhI49i5DpApTUAyE6/jxCV9sTCZj+kKNPAECuDALnbPlU1o286vzD9f1XRAJnZBBotpO3psVzAkbNC0eHHjEBAPhmE7j20XMCZn2nSOCLjAhE7ATmvY3XBG52ixL6LZnAD+8J3Pgul4BDQvWd3udAfYd0CcWTuNb7JDZlJzGPgTaBFJdRRDw9YgI8w9p9oGyL9wTWORqZOmICJSUlk7itx2XU6p3+a51bCX63IsN4ALejUL6DTP8wBph/uWszh4hnpYAXJrFofDvdJF86VQERPJfuGdIIxEgccIySEqWUZKDZr3gxUnJZs6VUXPrXqWxoum91jJQA8K6srGycdAIxEtMQ8ZMjElWNwxvq/cE+2eiG+4ilFxELFa+Mjz749MDx0vXbyDjfPKRqo5fvHOjQq9dTEog4FQAeuV/MfYIbEW+JxYMtk69rXlj/8T1JTujeiEUCrTXs9al5cod70VinfHog9ohhOFebfbFnZfeTAEDK9Kk0b5GPlq7IOaJ4aZwXPIAPkcgvnrbcpRIAsjUNogx+7iKf5SkhwcZdk2dY3r8AwBPeSca+MPsXXgOAU4iYM1CHXbI8Zw+D7idgkVi8jJZk5x5Sxopl+FYeTyBhRSL3sDJWLCNNYpRYRjoSo8QyfepJd2IvyFrxSRlLliHIaX5W9mdVlTTwpNIWLlNPLMha2ZWZuXri/8aStrQpo9D+AKMobrmj90reAAAAAElFTkSuQmCC" alt="Search" />
+            </button>
+        </div>
+        <div id="patient-names-list"></div> <!-- Patient names will be populated here -->
+        
+        <!-- Form Header -->
+        <h2 id="form-header">Book Appointment</h2> <!-- Added Header -->
+
+        <!-- Form Fields -->
+        <form id="patient-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="patientName">Patient Name</label>
+                    <input type="text" id="patientName" name="patientName" />
+                </div>
+                <div class="form-group">
+                    <label for="mobileNo">Mobile Number</label>
+                    <input type="text" id="mobileNo" name="mobileNo" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" />
+                </div>
+                <div class="form-group">
+                    <label for="aadharNo">Aadhar No.</label>
+                    <input type="text" id="aadharNo" name="aadharNo" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="text" id="age" name="age" />
+                </div>
+                <div class="form-group">
+                    <label for="dateTime">Date and Time</label>
+                    <input type="text" id="dateTime" name="dateTime" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" />
+                </div>
+            </div>
+
+            <!-- Book Button -->
+            <button type="button" id="book-button">Book</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal for Modify Appointment -->
+<div id="patient-modify-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCreateSlotsModall()">&times;</span>
+        
+        <h2 id="modify-form-header">Modify Appointment</h2> <!-- Change header id for clarity -->
+
+        <!-- Change id for the modify form -->
+        <form id="patient-modify-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="modify-patientName">Patient Name</label>
+                    <input type="text" id="modify-patientName" name="patientName" />
+                </div>
+                <div class="form-group">
+                    <label for="modify-mobileNo">Mobile Number</label>
+                    <input type="text" id="modify-mobileNo" name="mobileNo" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="modify-email">Email</label>
+                    <input type="text" id="modify-email" name="email" />
+                </div>
+                <div class="form-group">
+                    <label for="modify-aadharNo">Aadhar No.</label>
+                    <input type="text" id="modify-aadharNo" name="aadharNo" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="modify-age">Age</label>
+                    <input type="text" id="modify-age" name="age" />
+                </div>
+                <div class="form-group">
+                    <label for="modify-dateTime">Date and Time</label>
+                    <input type="text" id="modify-dateTime" name="dateTime" readonly />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="modify-address">Address</label>
+                    <input type="text" id="modify-address" name="address" />
+                </div>
+            </div>
+        
+            <button type="button" id="modify-button">Modify</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal for Create Slots -->
+<div id="create-slots-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCreateSlotsModal()">&times;</span>
+        <h2>Create Slot</h2>
+        <form id="create-slot-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="startTime">Start Time</label>
+                    <input type="time" id="startTime" name="startTime" required />
+                </div>
+                <div class="form-group">
+                    <label for="endTime">End Time</label>
+                    <input type="time" id="endTime" name="endTime" required />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="slotRange">Slot Range</label>
+                    <input type="text" id="slotRange" name="slotRange" placeholder="e.g., 10 minutes" />
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" required />
+                </div>
+            </div>
+            
+            
+            <button type="button" id="create-slot-button">Create</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+    <footer>&copy; copyright 2024 || Vaidya</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="appointments.js"></script>
+</body>
+</html>
